@@ -63,14 +63,18 @@
 //kbuild:lib-$(CONFIG_CROND) += crond.o
 
 //usage:#define crond_trivial_usage
-//usage:       "-fbS -l N " IF_FEATURE_CROND_D("-d N ") "-L LOGFILE -c DIR"
+//usage:       "-fbS "
+//usage:       "-l N "
+//usage:       IF_FEATURE_CROND_D("-d N ")
+//usage:       "-L LOGFILE "
+//usgae:       "-c DIR"
 //usage:#define crond_full_usage "\n\n"
-//usage:       "	-f	Foreground"
+//usage:     "\n	-f	Foreground"
 //usage:     "\n	-b	Background (default)"
 //usage:     "\n	-S	Log to syslog (default)"
 //usage:     "\n	-l N	Set log level. Most verbose 0, default 8"
 //usage:	IF_FEATURE_CROND_D(
-//usage:     "\n	-d N	Set log level, log to stderr"
+//usage:     "\n	-d N	Set log level. And directs all output to stderr"
 //usage:	)
 //usage:     "\n	-L FILE	Log to FILE"
 //usage:     "\n	-c DIR	Cron dir. Default:"CONFIG_FEATURE_CROND_DIR"/crontabs"
