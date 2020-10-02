@@ -846,7 +846,8 @@ static pid_t start_one_job(const char *user, CronLine *line)
 	pas = getpwnam(user);
 	if (!pas) {
 		bb_error_msg("can't get uid for %s", user);
-		goto err;
+		line->cl_pid = 0;
+		return 0;
 	}
 
 	/* Prepare things before vfork */
@@ -867,7 +868,6 @@ static pid_t start_one_job(const char *user, CronLine *line)
 	}
 	if (pid < 0) {
 		bb_simple_perror_msg("vfork");
- err:
 		pid = 0;
 	}
 	line->cl_pid = pid;
