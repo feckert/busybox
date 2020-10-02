@@ -690,7 +690,7 @@ static void change_user(struct passwd *pas)
 #if ENABLE_FEATURE_CROND_CALL_SENDMAIL
 
 static pid_t
-fork_job(const char *user, int mailFd, CronLine *line, bool run_sendmail)
+sendmail_fork_job(const char *user, int mailFd, CronLine *line, bool run_sendmail)
 {
 	struct passwd *pas;
 	const char *shell, *prog;
@@ -774,7 +774,7 @@ static pid_t start_one_job(const char *user, CronLine *line)
 		}
 	}
 
-	line->cl_pid = fork_job(user, mailFd, line, /*sendmail?*/ 0);
+	line->cl_pid = sendmail_fork_job(user, mailFd, line, /*sendmail?*/ 0);
 	if (mailFd >= 0) {
 		if (line->cl_pid <= 0) {
 			unlink(mailFile);
@@ -832,7 +832,7 @@ static void process_finished_job(const char *user, CronLine *line)
 	}
 	line->cl_empty_mail_size = 0;
 	/* if (line->cl_mailto) - always true if cl_empty_mail_size was nonzero */
-		line->cl_pid = fork_job(user, mailFd, line, /*sendmail?*/ 1);
+		line->cl_pid = sendmail_fork_job(user, mailFd, line, /*sendmail?*/ 1);
 }
 
 #else /* !ENABLE_FEATURE_CROND_CALL_SENDMAIL */
